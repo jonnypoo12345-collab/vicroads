@@ -90,6 +90,26 @@
     .full-width {
       width:100%;
     }
+
+    /* Fix for numbers/text looking like links */
+    .permit-details div,
+    .address-section div,
+    .signature-section div,
+    .permit-status div,
+    .proficiency div,
+    .issue-date,
+    .expiry-date {
+      color: #222;
+      text-decoration: none;
+    }
+
+    /* Last refreshed spacing */
+    .last-refreshed {
+      margin: 70px 0 20px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+    }
   </style>
 </head>
 
@@ -103,9 +123,10 @@
     </div>
   </header>
 
-  <div style="margin:70px 0 20px 0; text-align:center; font-size:14px; color:#555;">
-  <b>Last refreshed:</b> Fri 14 Nov 2025 11:47am
-</div>
+  <!-- LAST REFRESHED -->
+  <div class="last-refreshed">
+    <b>Last refreshed:</b> Fri 14 Nov 2025 11:47am
+  </div>
 
   <!-- FULL WIDTH YELLOW BOX -->
   <section class="yellow-box permit-header" style="background:#f5c948; display:flex; align-items:center; justify-content:space-between; padding:14px 16px; margin-bottom:20px;">
@@ -163,7 +184,7 @@
 
         <div>
           <div class="detail-label">DATE OF BIRTH</div>
-          <div style="margin-top:6px;">07 Aug 2009</div>
+          <div style="margin-top:6px;">07 Aug 2007</div>
         </div>
       </div>
     </div>
@@ -249,6 +270,7 @@
 
 </body>
 </html>
+
 
 
 
