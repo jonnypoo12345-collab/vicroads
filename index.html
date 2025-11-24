@@ -57,14 +57,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* FULL WIDTH fixes */
-    .permit-header {
-  border-radius: 0 !important;
-  max-width: 95%;       /* makes it narrower */
-  margin: 0 auto;       /* centers it */
-  width: auto;           /* stops forcing full width */
-}
-
     .photo-box img {
   width: 100%;   /* fills screen width */
   height: auto;  /* keeps natural height, not massive */
@@ -73,10 +65,16 @@
   object-fit: cover; /* optional, keeps it neat without zooming */
 }
 
-    .yellow-box permit-header {
-  max-width: 90%;     /* makes it narrower */
-  margin-left: auto;
-  margin-right: auto;
+.yellow-box.permit-header {
+  width: 100%;           /* full screen width */
+  max-width: 100%;       /* remove narrowing */
+  margin: 0;             /* no extra space on sides */
+  padding: 10px 16px;    /* reduce vertical padding to make it shorter */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0;      /* optional */
+  box-sizing: border-box; /* ensures padding doesn't overflow */
 }
 
     hr.full {
@@ -286,6 +284,7 @@ hr.full-large {
 
 </body>
 </html>
+
 
 
 
