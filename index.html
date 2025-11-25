@@ -252,7 +252,7 @@
     const date = now.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
     const time = now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
 
-    const formatted = `Last refreshed: (${day}, ${date}, ${time})`;
+    const formatted = `Last refreshed: ${day}, ${date}, ${time}`;
     document.getElementById("last-refreshed").innerText = formatted;
   }
 
@@ -261,11 +261,13 @@
 </script>
 
 
+
   
   </div>
 
 </body>
 </html>
+
 
 
 
