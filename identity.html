@@ -1,99 +1,167 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta name="format-detection" content="telephone=no">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Permit Mockup</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css" />
+
   <style>
+    /* Use Inter globally */
     body {
-      font-family:'Bicyclette', sans-serif;
-      color: #111; /* make all text dark grey */
+      color: #222;
+      font-family: 'Inter', sans-serif;
       margin:0;
       padding:0;
     }
-
+    
     .action-buttons {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      overflow: hidden;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center; /* make buttons vertically centered */
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  overflow: hidden;
+}
 
-    .tab {
-      flex: 1;
-      background-color: white;
-      border: none;
-      font-weight: 700;
-      font-size: 16px;
-      letter-spacing: 1px;
-      color: #111;
-      padding: 12px 0;
-      cursor: pointer;
-      transition: background-color 0.3s ease, border-radius 0.3s ease;
-    }
-
+.tab {
+  flex: 1;
+  background-color: white;
+  border: none;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #222;           
+  padding: 10px 0; /* taller buttons */
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-radius 0.3s ease;
+  font-family: 'Inter', sans-serif;
+}
+    
     .tab.active {
       background-color: #6b7280;
       color: #fff;
-      border-radius: 20px; /* active button rounded */
+      border-radius: 20px;
       margin: 0 4px;
     }
 
     .detail-label {
       font-size: 13px;
-      color: #6b7280; /* light grey labels */
+      color: #6b7280;  
       font-weight: 500;
       letter-spacing: 0.5px;
     }
 
-    /* FULL WIDTH YELLOW BOX */
-    .permit-header {
-      border-radius: 0 !important;
-      width: 100%;
-      padding-left: 16px;
-      padding-right: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
+    .photo-box img {
+  width: 100%;   /* fills screen width */
+  height: auto;  /* keeps natural height, not massive */
+  display: block;
+  border-radius: 0 !important;
+  object-fit: cover; /* optional, keeps it neat without zooming */
+}
+
+.yellow-box.permit-header {
+  width: 100%;           /* full screen width */
+  max-width: 100%;       /* remove narrowing */
+  margin: 0;             /* no extra space on sides */
+  padding: 10px 16px;    /* reduce vertical padding to make it shorter */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0;      /* optional */
+  box-sizing: border-box; /* ensures padding doesn't overflow */
+}
+
+    hr.full {
+  border: none;
+  border-top: 1px solid #d1d5db; /* light grey */
+  margin: 12px 0;
+  width: 100%;
+}
+
+hr.full-large {
+  border: none;
+  border-top: 1px solid #d1d5db; /* light grey */
+  margin: 24px 0;
+  width: 100%;
+}
+
+    .permit-box {
+      background:#f3f4f6;
+      padding:16px;
+      border-radius:12px;
+      margin-top:24px;
+      font-weight:700;
+      color:#222;
+      font-size:16px;
     }
 
-    /* FULL WIDTH LICENSE IMAGE */
-    .photo-box img {
-      width: 100%;
-      border-radius: 0 !important;
-      display: block;
-      object-fit: cover;
+    .full-width {
+      width:100%;
+    }
+
+    /* Fix for numbers/text looking like links */
+    .permit-details div,
+    .address-section div,
+    .signature-section div,
+    .permit-status div,
+    .proficiency div,
+    .issue-date,
+    .expiry-date {
+      color: #222;
+      text-decoration: none;
+    }
+
+    /* Last refreshed spacing */
+    .last-refreshed {
+      margin: 20px 0 10px 0;
+      text-align: center;
+      font-size: 14px;
+      color: #555;
     }
   </style>
 </head>
-<body>
 
-  <header class="topbar" style="text-align:center; margin-bottom:10px;">
-    <h1 style="margin:0; font-size:22px; font-weight:700;">View details</h1>
-    <p class="refresh" style="margin:4px 0 0 0; font-size:14px; color:#555;">Last refreshed: Fri 14 Nov 2025 11:47am</p>
+<body style="padding-top:50px;">
+
+  <!-- TOPBAR -->
+  <header class="topbar" style="position:fixed; top:0; left:0; right:0; background:#fff; display:flex; align-items:center; justify-content:space-between; padding:10px 16px; box-shadow:0 2px 4px rgba(0,0,0,0.1); z-index:1000;">
+    <div style="font-size:18px; font-weight:700; color:#222;">&lt;</div>
+    <div style="flex:1; text-align:center;">
+      <h1 style="margin:0; font-size:18px; font-weight:700; color:#222;">View details</h1>
+    </div>
   </header>
 
-  <!-- YELLOW HEADER BOX FULL WIDTH -->
-  <section class="yellow-box permit-header" style="background:#f5c948;">
+  <!-- LAST REFRESHED -->
+  <div class="last-refreshed">
+    <b>Last refreshed:</b> Fri 14 Nov 2025 11:47am
+  </div>
+
+  <!-- FULL WIDTH YELLOW BOX -->
+  <section class="yellow-box permit-header" style="background:#f5c948; display:flex; align-items:center; justify-content:space-between; padding:14px 16px;">
     <div class="left" style="line-height:1.2;">
-      <p class="title" style="margin:0; font-size:18px; font-weight:700;">LEARNER PERMIT</p>
-      <p class="subtitle" style="margin:2px 0 0 0; font-size:14px; font-weight:500;">Victoria Australia</p>
+      <p class="title" style="margin:0; font-size:18px; font-weight:700; color:#222;">LEARNER PERMIT</p>
+      <p class="subtitle" style="margin:2px 0 0 0; font-size:14px; font-weight:500; color:#222;">Victoria Australia</p>
     </div>
     <div class="right">
-      <img src="Vicroad.jpg" alt="VicRoads Logo" class="logo" style="height:50px; object-fit:contain;" />
+      <img src="Vicroad.jpg" alt="VicRoads Logo" style="height:50px; object-fit:contain;" />
     </div>
   </section>
 
-  <!-- LICENSE IMAGE FULL WIDTH -->
-  <section class="photo-qr" style="display:flex; gap:20px; margin-top:20px;">
+  <!-- FULL WIDTH LICENSE IMAGE -->
+  <section class="photo-qr" style="display:flex; gap:20px;">
     <div class="photo-box" style="flex:1;">
       <img src="License.jpeg" alt="Permit Photo" />
     </div>
   </section>
+
+  <!-- CONTENT WITH SIDE PADDING -->
+  <div style="padding-left:20px; padding-right:20px;">
 
   <section class="action-buttons">
     <button class="tab" onclick="window.location.href='index.html'">Permit</button>
@@ -133,6 +201,7 @@
   </script>
 </body>
 </html>
+
 
 
 
