@@ -1,371 +1,209 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="format-detection" content="telephone=no">
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Permit Mockup</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Permit QR Modal</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f8f8f8;
+  }
 
-  <style>
-    body {
-      color: #222;
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+  /* Overlay for background */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 998;
+  }
 
-    .topbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 16px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
+  .modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
 
-    .topbar h1 {
-      margin: 0;
-      font-size: 16px;
-      font-weight: 700;
-      color: #222;
-    }
+  /* Slide-up modal */
+  .slide-up-modal {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    transition: bottom 0.5s ease-in-out;
+    z-index: 999;
+    padding: 20px;
+    overflow-y: auto;
+  }
 
-    .action-buttons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 20px;
-      border: 1px solid #ccc;
-      border-radius: 30px;
-      overflow: hidden;
-    }
+  .slide-up-modal.active {
+    bottom: 0;
+  }
 
-    .tab {
-      flex: 1;
-      font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      line-: 1.2;
-      background-color: white;
-      border: none;
-      letter-spacing: 1px;
-      color: #222;
-      padding: 10px 0;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+  /* Header */
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
 
-    .tab.active {
-      background-color: #253544;
-      color: #fff;
-      border-radius: 20px;
-      margin: 0;
-    }
+  .modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    flex: 1;
+  }
 
-    .detail-label {
-      font-size: 13px;
-      color: #6d717a;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      text-align: left;
-    }
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+  }
 
-    .value-bold {
-      font-weight: 700 !important;
-      color: #3a465c !important;
-      font-size: 16px !important;
-      letter-spacing: 1px !important;
-      margin-bottom: 12px;
-    }
+  /* QR image */
+  .modal-qr {
+    display: block;
+    margin: 0 auto 15px auto;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+  }
 
-    .photo-box {
-      position: relative; /* needed for clickable area */
-    }
+  /* Countdown */
+  .countdown {
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
 
-    .photo-box img {
-      width: 100%;
-      : auto;
-      display: block;
-      object-fit: cover;
-    }
+  /* Consent text */
+  .consent-text {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
 
-    /* Clickable area over image */
-    #click-area {
-      position: absolute;
-      top: 60%;    /* adjust vertical position */
-      left: 70%;   /* adjust horizontal position */
-      width: 15%;  /* width of clickable area */
-      height: 15%; /* height of clickable area */
-      cursor: pointer;
-      /* optional: remove background or keep semi-transparent for testing */
-      /* background: rgba(255,0,0,0.3); */
-    }
+  .consent-text b {
+    font-weight: 700;
+  }
 
-    .yellow-box {
-      width: 100%;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #ffd33e;
-    }
+  /* Bullet list */
+  .sharing-list {
+    font-size: 14px;
+    line-height: 1.5;
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
 
-    hr.full {
-      border: none;
-      border-top: 1px solid #e5e5e5;
-      margin: 12px 0;
-      width: 100%;
-    }
+  .sharing-list li {
+    margin-bottom: 6px;
+  }
 
-    hr.full-large {
-      border: none;
-      border-top: 1px solid #e5e5e5;
-      margin: 24px 0;
-      width: 100%;
-    }
-
-    .permit-box {
-      background: #f3f4f6;
-      padding: 16px;
-      border-radius: 12px;
-      margin-top: 24px;
-      font-weight: 700;
-      color: #222;
-      font-size: 16px;
-    }
-
-    .last-refreshed {
-      margin: 20px 0 10px;
-      text-align: center;
-      font-size: 11px;
-      color: #555;
-    }
-
-    /* Permit details container */
-    .permit-details {
-      display: flex;
-      justify-content: flex-start;
-      gap: 100px; /* spacing between left and right columns */
-      margin-top: 24px;
-    }
-
-    .permit-column {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    /* Slide-up modal */
-    .slide-up-modal {
-      position: fixed;
-      bottom: -100%;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #fff;
-      box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
-      border-top-left-radius: 16px;
-      border-top-right-radius: 16px;
-      transition: bottom 0.5s ease-in-out;
-      padding: 20px;
-      overflow-y: auto;
-      z-index: 999;
-    }
-
-    .slide-up-modal.active {
-      bottom: 0;
-    }
-
-    .slide-up-modal .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      font-size: 24px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-  </style>
+  /* Example trigger button */
+  .show-modal-btn {
+    margin: 40px auto;
+    display: block;
+    padding: 12px 20px;
+    background: #253544;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+</style>
 </head>
+<body>
 
-<body style="padding-top:40px;">
+<!-- Trigger button -->
+<button class="show-modal-btn" onclick="openModal()">Show QR Modal</button>
 
-  <!-- TOPBAR -->
-  <header class="topbar">
-    <img src="back.png" style="height:22px; cursor:pointer;" />
-    <div style="flex:1; text-align:center;">
-      <h1>View details</h1>
-    </div>
-  </header>
+<!-- Overlay -->
+<div class="modal-overlay" id="overlay" onclick="closeModal()"></div>
 
-  <!-- LAST REFRESHED -->
-  <div id="last-refreshed" class="last-refreshed">Loading...</div>
-
-  <!-- YELLOW HEADER -->
-  <section class="yellow-box">
-    <div style="line-height:1.2;">
-      <p style="margin:0; font-size:14px; font-weight:700;">LEARNER PERMIT</p>
-      <p style="margin:2px 0 0; font-size:14px; font-weight:500;">Victoria Australia</p>
-    </div>
-    <img src="Vicroad.jpg" style="height:50px; object-fit:contain;">
-  </section>
-
-  <!-- PHOTO -->
-  <section class="photo-box">
-    <img src="License.jpeg" alt="License Image">
-    <div id="click-area"></div>
-  </section>
-
-  <!-- Slide-up modal -->
-  <div class="slide-up-modal" id="modal">
-    <div class="close-btn" id="close-btn">&times;</div>
-    <h2>QR Code / Extra Info</h2>
-    <p>Add any content here — QR codes, text, buttons, etc.</p>
-    <img src="QRCode.png" style="width:150px; display:block; margin:20px auto;">
+<!-- Slide-up Modal -->
+<div class="slide-up-modal" id="modal">
+  <div class="modal-header">
+    <div></div> <!-- empty space for center alignment -->
+    <h2>Verify Permit</h2>
+    <button class="close-btn" onclick="closeModal()">X</button>
   </div>
 
-  <div style="padding-left:20px; padding-right:20px;">
+  <img src="QRCode.png" alt="QR Code" class="modal-qr">
 
-    <!-- BUTTONS -->
-    <section class="action-buttons">
-      <button class="tab active" onclick="window.location.href='index.html'">Permit</button>
-      <button class="tab" onclick="window.location.href='identity.html'">Identity</button>
-      <button class="tab" onclick="window.location.href='age.html'">Age</button>
-    </section>
+  <div class="countdown" id="countdown">QR expires in 01:59</div>
 
-    <!-- NAME -->
-    <div class="value-bold" style="margin-top:40px; font-weight:700; font-size:20px; letter-spacing:1px;">
-      JONATHAN F SAWYER
-    </div>
-
-    <hr class="full" />
-
-    <!-- PERMIT DETAILS -->
-    <div class="permit-details">
-
-      <!-- Left column -->
-      <div class="permit-column">
-        <div class="detail-label">Permit number</div>
-        <div class="value-bold">059463617</div>
-
-        <div class="detail-label">Permit type</div>
-        <div class="value-bold" style="display:flex; align-items:center; gap:6px;">
-          Car <img src="Lplate.jpeg" style="height:18px;">
-        </div>
-      </div>
-
-      <!-- Right column -->
-      <div class="permit-column">
-        <div class="detail-label">Expiry</div>
-        <div class="value-bold">12 Aug 2035</div>
-
-        <div class="detail-label">Date of birth</div>
-        <div class="value-bold">07 Aug 2007</div>
-      </div>
-
-    </div>
-
-    <hr class="full-large" />
-
-    <!-- ADDRESS -->
-    <div style="font-weight:700; font-size:16px;">
-      <div class="detail-label" style="margin-bottom:4px;">Address</div>
-      <div class="value-bold" style="margin-bottom:2px;">109 LOWER DANDENONG RD</div>
-      <div class="value-bold" style="margin-bottom:0;">MENTONE VIC 3194</div>
-    </div>
-
-    <hr class="full-large" />
-
-    <!-- SIGNATURE -->
-    <div>
-      <div class="detail-label">Signature</div>
-      <img src="Sign.jpeg" style="height:60px; object-fit:contain;">
-    </div>
-
-    <div class="permit-box">CAR LEARNER PERMIT DETAILS</div>
-
-    <!-- STATUS -->
-    <div style="margin-top:24px;">
-      <div class="detail-label">Permit status</div>
-      <div style="display:flex; align-items:center; gap:6px;">
-        <img src="Tick.jpeg" style="height:18px;">
-        <div class="value-bold">Current</div>
-      </div>
-    </div>
-
-    <!-- PROFICIENCY -->
-    <div style="margin-top:24px;">
-      <div class="detail-label">Proficiency</div>
-      <div style="display:flex; align-items:center; gap:6px;">
-        <img src="Lplate.jpeg" style="height:18px;">
-        <div class="value-bold">LEARNERS</div>
-      </div>
-    </div>
-
-    <!-- ISSUE DATE -->
-    <div style="margin-top:24px;">
-      <div class="detail-label">Issue date</div>
-      <div class="value-bold">12 Aug 2025</div>
-    </div>
-
-    <div class="permit-box">Other details</div>
-
-    <div style="margin-top:24px;">
-      <div class="detail-label">Conditions</div>
-      <div class="value-bold">No Conditions</div>
-    </div>
-
-    <div style="margin-top:24px;">
-      <div class="detail-label">Card number</div>
-      <div class="value-bold">********</div>
-    </div>
-
-    <hr class="full-large" />
-
-    <div style="margin-top:24px;">
-      <div class="detail-label">Victoria Police barcode</div>
-      <img src="Barcode.png" style="width:100%; border-radius:14px;">
-    </div>
-
+  <div class="consent-text">
+    By presenting this QR code you <b>consent</b> to share some or all of your driver licence information, including with scanners, venues and law enforcement agencies. This may retain your information in accordance with their business practise and legal requirements.
   </div>
 
-  <script>
-    // Last refreshed
-    function updateLastRefreshed() {
-      const now = new Date();
-      const day = now.toLocaleDateString('en-AU', { weekday: 'short' });
-      const date = now.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
-      const time = now.toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit', hour12: true });
-      const formatted = `<strong>Last refreshed</strong>: ${day} ${date} ${time}`;
-      document.getElementById("last-refreshed").innerHTML = formatted;
-    }
-    updateLastRefreshed();
+  <div class="consent-text"><b>You're sharing:</b></div>
+  <ul class="sharing-list">
+    <li>Victorian driver licence photo</li>
+    <li>Full name, birth date and address</li>
+    <li>Licence number, type and expiry date</li>
+    <li>Licence status</li>
+    <li>Proficiency</li>
+  </ul>
+</div>
 
-    // Modal slide-up
-    const clickArea = document.getElementById('click-area');
-    const modal = document.getElementById('modal');
-    const closeBtn = document.getElementById('close-btn');
+<script>
+  // Modal functions
+  const modal = document.getElementById('modal');
+  const overlay = document.getElementById('overlay');
 
-    clickArea.addEventListener('click', () => {
-      modal.classList.add('active');
-    });
+  function openModal() {
+    modal.classList.add('active');
+    overlay.classList.add('active');
+    startCountdown(119); // 1:59 countdown
+  }
 
-    closeBtn.addEventListener('click', () => {
-      modal.classList.remove('active');
-    });
+  function closeModal() {
+    modal.classList.remove('active');
+    overlay.classList.remove('active');
+    stopCountdown();
+  }
 
-    window.addEventListener('click', (e) => {
-      if (e.target === modal) modal.classList.remove('active');
-    });
-  </script>
+  // Countdown timer
+  let countdownInterval;
+  function startCountdown(seconds) {
+    const countdownEl = document.getElementById('countdown');
+    let remaining = seconds;
+
+    countdownInterval = setInterval(() => {
+      const mins = Math.floor(remaining / 60);
+      const secs = remaining % 60;
+      countdownEl.textContent = `QR expires in ${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+      remaining--;
+      if (remaining < 0) {
+        clearInterval(countdownInterval);
+        countdownEl.textContent = 'QR expired';
+      }
+    }, 1000);
+  }
+
+  function stopCountdown() {
+    clearInterval(countdownInterval);
+  }
+</script>
 
 </body>
 </html>
+
 
