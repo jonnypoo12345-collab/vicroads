@@ -1,321 +1,263 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="format-detection" content="telephone=no">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Permit Mockup</title>
+  <title>Learner Permit</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     body {
-      color: #222;
       font-family: 'Inter', sans-serif;
       margin: 0;
       padding: 0;
-    }
-
-    .action-buttons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 20px;
-      border: 1px solid #ccc;
-      border-radius: 30px;
-      overflow: hidden;
-    }
-
-    .tab {
-      flex: 1;
-      background-color: white;
-      border: none;
-      -weight: 700;
-      -size: 16px;
-      letter-spacing: 1px;
+      background: #fff;
       color: #222;
-      padding: 10px 0;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
     }
 
-    .tab.active {
-      background-color: #253544;
-      color: #fff;
-      border-radius: 20px;
+    .last-refreshed {
+      text-align: center;
+      font-size: 12px;
+      color: #555;
+      margin: 16px 0;
+    }
+
+    .yellow-header {
+      background: #ffd33e;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+    }
+
+    .yellow-header p {
       margin: 0;
+      line-height: 1.2;
+    }
+
+    .yellow-header .title {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .yellow-header .subtitle {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .photo-section {
+      display: flex;
+      gap: 16px;
+      padding: 16px;
+    }
+
+    .photo-section img {
+      width: 120px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .qr-consent {
+      font-size: 13px;
+      color: #333;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .qr-consent button {
+      margin-top: 12px;
+      background: #253544;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .details {
+      padding: 0 16px 24px;
+    }
+
+    .name {
+      font-weight: 700;
+      font-size: 18px;
+      margin-top: 20px;
+      letter-spacing: 1px;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e5e5e5;
+      margin: 12px 0;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 12px;
     }
 
     .detail-label {
-      font-size: 13px;
+      font-size: 12px;
       color: #6d717a;
       font-weight: 500;
       letter-spacing: 0.5px;
     }
 
     .value-bold {
-      font-weight: 700 !important;
-      color: #3a465c !important;
-      font-size: 16px !important;
-      letter-spacing: 1px !important;
-    }
-
-    .photo-box img {
-      width: 100%;
-      height: auto;
-      display: block;
-      object-fit: cover;
-    }
-
-    .yellow-box {
-      width: 100%;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #ffd33e;
-    }
-
-    hr.full {
-      border: none;
-      border-top: 1px solid #e5e5e5;
-      margin: 12px 0;
-      width: 100%;
-    }
-
-    hr.full-large {
-      border: none;
-      border-top: 1px solid #e5e5e5;
-      margin: 24px 0;
-      width: 100%;
-    }
-
-    .permit-box {
-      background: #f3f4f6;
-      padding: 16px;
-      border-radius: 12px;
-      margin-top: 24px;
       font-weight: 700;
-      color: #222;
-      font-size: 16px;
+      font-size: 14px;
+      color: #3a465c;
+      margin-top: 2px;
     }
 
-    .last-refreshed {
-      margin: 20px 0 10px;
-      text-align: center;
-      font-size: 11px;
-      color: #555;
+    .address {
+      margin-top: 12px;
+    }
+
+    .address .value-bold {
+      display: block;
+    }
+
+    .section-title {
+      background: #f3f4f6;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-top: 24px;
+      color: #222;
+    }
+
+    .extra-section {
+      padding: 0 16px;
+      margin-top: 20px;
+    }
+
+    .extra-section img {
+      margin-top: 6px;
+      max-width: 100%;
     }
   </style>
 </head>
-
-<body style="padding-top:50px;">
-
-  <!-- TOPBAR -->
-<header class="topbar" style="position:fixed; top:0; left:0; right:0; background:#fff; display:flex; align-items:center; justify-content:space-between; padding:10px 16px; box-shadow:0 2px 4px rgba(0,0,0,0.1); z-index:1000;">
-    <img src="back.png" style="height:22px; cursor:pointer;" />
-    <div style="flex:1; text-align:center;">
-      <h1 style="margin:0; font-size:16px; font-weight:700; color:#222;">View details</h1>
-    </div>
-</header>
-
+<body>
 
   <!-- LAST REFRESHED -->
-<div id="last-refreshed" class="last-refreshed">Loading...</div>
+  <div id="last-refreshed" class="last-refreshed"></div>
 
-  <!-- YELLOW HEADER -->
-  <section class="yellow-box">
-    <div style="line-height:1.2;">
-      <p style="margin:0; font-size:14px; font-weight:700;">LEARNER PERMIT</p>
-      <p style="margin:2px 0 0; font-size:14px; font-weight:500;">Victoria Australia</p>
+  <!-- HEADER -->
+  <section class="yellow-header">
+    <div>
+      <p class="title">LEARNER PERMIT</p>
+      <p class="subtitle">Victoria Australia</p>
     </div>
-    <img src="Vicroad.jpg" style="height:50px; object-fit:contain;">
+    <img src="Vicroad.jpg" style="height:40px;">
   </section>
 
-  <!-- PHOTO -->
-  <section class="photo-box">
+  <!-- PHOTO + QR CONSENT -->
+  <section class="photo-section">
     <img src="License.jpeg">
-  </section>
-
-  <div style="padding-left:20px; padding-right:20px;">
-
-    <!-- BUTTONS -->
-     <section class="action-buttons">
-    <button class="tab active" onclick="window.location.href='index.html'">Permit</button>
-    <button class="tab" onclick="window.location.href='identity.html'">Identity</button>
-    <button class="tab" onclick="window.location.href='age.html'">Age</button>
-  </section>
-
-    <!-- NAME -->
-    <div class="value-bold" style="margin-top:40px; font-weight:700; font-size:20px; letter-spacing:1px;">
-      JONATHAN F SAWYER
+    <div class="qr-consent">
+      Presenting a QR code allows your driver licence information to be scanned and shared.<br>
+      Do you consent to share your information?<br>
+      <button>Reveal QR code</button>
     </div>
+  </section>
 
-    <hr class="full" />
+  <!-- CORE DETAILS -->
+  <div class="details">
+    <div class="name">JONATHAN F SAWYER</div>
+    <hr />
 
-    <!-- PERMIT DETAILS -->
-    <div style="display:flex; justify-content:space-between; margin-top:24px;">
-      
+    <div class="detail-row">
       <div>
         <div class="detail-label">Permit number</div>
-        <div class="value-bold" style="margin-bottom:24px;">059463617</div>
+        <div class="value-bold">059463617</div>
 
         <div class="detail-label">Permit type</div>
-        <div style="display:flex; align-items:center; gap:6px;" class="value-bold">
-          Car <img src="Lplate.jpeg" style="height:18px;">
-        </div>
+        <div class="value-bold">Car <img src="Lplate.jpeg" style="height:14px; vertical-align:middle;"></div>
       </div>
-
       <div style="text-align:right;">
         <div class="detail-label">Expiry</div>
-        <div class="value-bold" style="margin-bottom:24px;">12 Aug 2035</div>
+        <div class="value-bold">12 Aug 2035</div>
 
-        <div class="detail-label">Date of brith</div>
+        <div class="detail-label">Date of birth</div>
         <div class="value-bold">07 Aug 2007</div>
       </div>
-
     </div>
 
-    <hr class="full-large" />
+    <hr />
 
-    <!-- ADDRESS -->
-    <div style="font-weight:700; font-size:16px;">
+    <div class="address">
       <div class="detail-label">Address</div>
       <div class="value-bold">109 LOWER DANDENONG RD</div>
       <div class="value-bold">MENTONE VIC 3194</div>
     </div>
-
-    <hr class="full-large" />
-
-    <!-- SIGNATURE -->
-    <div>
-      <div class="detail-label">Signature</div>
-      <img src="Sign.jpeg" style="height:60px; object-fit:contain;">
-    </div>
-
-    <div class="permit-box">CAR LEARNER PERMIT DETAILS</div>
-
-    <!-- STATUS -->
-    <div style="margin-top:24px;">
-      <div class="detail-label">Permit status</div>
-      <div style="display:flex; align-items:center; gap:6px;">
-        <img src="Tick.jpeg" style="height:18px;">
-        <div class="value-bold">Current</div>
-      </div>
-    </div>
-
-    <!-- PROFICIENCY -->
-    <div style="margin-top:24px;">
-      <div class="detail-label">Proficiency</div>
-      <div style="display:flex; align-items:center; gap:6px;">
-        <img src="Lplate.jpeg" style="height:18px;">
-        <div class="value-bold">LEARNERS</div>
-      </div>
-    </div>
-
-    <!-- ISSUE DATE -->
-    <div style="margin-top:24px;">
-      <div class="detail-label">Issue date</div>
-      <div class="value-bold">12 Aug 2025</div>
-    </div>
-
-    <!-- EXPIRY -->
-    <div style="margin-top:24px;">
-      <div class="detail-label">Expiry</div>
-      <div class="value-bold">12 Aug 2035</div>
-    </div>
-
-    <div class="permit-box">Other details</div>
-
-    <div style="margin-top:24px;">
-      <div class="detail-label">Conditions</div>
-      <div class="value-bold">No Conditions</div>
-    </div>
-
-    <div style="margin-top:24px;">
-      <div class="detail-label">Card number</div>
-      <div class="value-bold">********</div>
-    </div>
-
-    <hr class="full-large" />
-
-    <div style="margin-top:24px;">
-      <div class="detail-label">Victoria Police barcode</div>
-      <img src="Barcode.png" style="width:100%; border-radius:14px;">
-    </div>
-
-<script>
-  function updateLastRefreshed() {
-    const now = new Date();
-    const day = now.toLocaleDateString('en-AU', { weekday: 'long' });
-    const date = now.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
-    const time = now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
-
-    const formatted = `<strong>Last refreshed</strong>: ${day} ${date} ${time}`;
-    document.getElementById("last-refreshed").innerHTML = formatted;
-  }
-
-  updateLastRefreshed();
-</script>
-  
   </div>
+
+  <!-- EXTRA SECTIONS BELOW (scroll view) -->
+  <div class="section-title">CAR LEARNER PERMIT DETAILS</div>
+
+  <div class="extra-section">
+    <div class="detail-label">Signature</div>
+    <img src="Sign.jpeg" style="height:60px; object-fit:contain;">
+  </div>
+
+  <div class="extra-section">
+    <div class="detail-label">Permit status</div>
+    <div style="display:flex; align-items:center; gap:6px;">
+      <img src="Tick.jpeg" style="height:18px;">
+      <div class="value-bold">Current</div>
+    </div>
+  </div>
+
+  <div class="extra-section">
+    <div class="detail-label">Proficiency</div>
+    <div style="display:flex; align-items:center; gap:6px;">
+      <img src="Lplate.jpeg" style="height:18px;">
+      <div class="value-bold">LEARNERS</div>
+    </div>
+  </div>
+
+  <div class="extra-section">
+    <div class="detail-label">Issue date</div>
+    <div class="value-bold">12 Aug 2025</div>
+  </div>
+
+  <div class="extra-section">
+    <div class="detail-label">Expiry</div>
+    <div class="value-bold">12 Aug 2035</div>
+  </div>
+
+  <div class="section-title">Other details</div>
+
+  <div class="extra-section">
+    <div class="detail-label">Conditions</div>
+    <div class="value-bold">No Conditions</div>
+  </div>
+
+  <div class="extra-section">
+    <div class="detail-label">Card number</div>
+    <div class="value-bold">********</div>
+  </div>
+
+  <div class="extra-section">
+    <div class="detail-label">Victoria Police barcode</div>
+    <img src="Barcode.png" style="width:100%; border-radius:8px;">
+  </div>
+
+  <script>
+    function updateLastRefreshed() {
+      const now = new Date();
+      const day = now.toLocaleDateString('en-AU', { weekday: 'short' });
+      const date = now.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
+      const time = now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
+      document.getElementById("last-refreshed").innerHTML = `${day} ${date} ${time}`;
+    }
+    updateLastRefreshed();
+  </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
