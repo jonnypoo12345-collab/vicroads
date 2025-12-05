@@ -3,33 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Permit QR Modal</title>
+<title>Permit Mockup</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
   body {
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
+    color: #222;
     background: #f8f8f8;
   }
 
-  /* Overlay for background */
-  .modal-overlay {
+  /* Topbar */
+  .topbar {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease;
-    z-index: 998;
+    right: 0;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
   }
 
-  .modal-overlay.active {
-    opacity: 1;
-    visibility: visible;
+  .topbar h1 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    flex: 1;
+  }
+
+  .photo-box {
+    position: relative;
+    margin-top: 70px;
+  }
+
+  .photo-box img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  /* Clickable area over image */
+  #click-area {
+    position: absolute;
+    top: 60%;    /* adjust vertical position */
+    left: 70%;   /* adjust horizontal position */
+    width: 15%;  /* width of clickable area */
+    height: 15%; /* height of clickable area */
+    cursor: pointer;
   }
 
   /* Slide-up modal */
@@ -41,20 +70,21 @@
     height: 100%;
     background: #fff;
     transition: bottom 0.5s ease-in-out;
-    z-index: 999;
     padding: 20px;
     overflow-y: auto;
+    z-index: 999;
   }
 
   .slide-up-modal.active {
     bottom: 0;
   }
 
-  /* Header */
+  /* Modal header */
   .modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     margin-bottom: 20px;
   }
 
@@ -67,10 +97,8 @@
   }
 
   .close-btn {
-    background: none;
-    border: none;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: bold;
     cursor: pointer;
   }
 
@@ -103,7 +131,7 @@
     font-weight: 700;
   }
 
-  /* Bullet list */
+  /* Sharing list */
   .sharing-list {
     font-size: 14px;
     line-height: 1.5;
@@ -114,39 +142,32 @@
   .sharing-list li {
     margin-bottom: 6px;
   }
-
-  /* Example trigger button */
-  .show-modal-btn {
-    margin: 40px auto;
-    display: block;
-    padding: 12px 20px;
-    background: #253544;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-  }
 </style>
 </head>
 <body>
 
-<!-- Trigger button -->
-<button class="show-modal-btn" onclick="openModal()">Show QR Modal</button>
+<!-- TOPBAR -->
+<header class="topbar">
+  <img src="back.png" style="height:22px; cursor:pointer;" />
+  <h1>View details</h1>
+  <div style="width:22px;"></div>
+</header>
 
-<!-- Overlay -->
-<div class="modal-overlay" id="overlay" onclick="closeModal()"></div>
+<!-- License Photo -->
+<section class="photo-box">
+  <img src="License.jpeg" alt="License Image">
+  <div id="click-area"></div>
+</section>
 
-<!-- Slide-up Modal -->
+<!-- Slide-up modal -->
 <div class="slide-up-modal" id="modal">
   <div class="modal-header">
-    <div></div> <!-- empty space for center alignment -->
+    <div></div>
     <h2>Verify Permit</h2>
-    <button class="close-btn" onclick="closeModal()">X</button>
+    <div class="close-btn" id="close-btn">&times;</div>
   </div>
 
   <img src="QRCode.png" alt="QR Code" class="modal-qr">
-
   <div class="countdown" id="countdown">QR expires in 01:59</div>
 
   <div class="consent-text">
@@ -164,21 +185,20 @@
 </div>
 
 <script>
-  // Modal functions
+  // Modal toggle
+  const clickArea = document.getElementById('click-area');
   const modal = document.getElementById('modal');
-  const overlay = document.getElementById('overlay');
+  const closeBtn = document.getElementById('close-btn');
 
-  function openModal() {
+  clickArea.addEventListener('click', () => {
     modal.classList.add('active');
-    overlay.classList.add('active');
-    startCountdown(119); // 1:59 countdown
-  }
+    startCountdown(119);
+  });
 
-  function closeModal() {
+  closeBtn.addEventListener('click', () => {
     modal.classList.remove('active');
-    overlay.classList.remove('active');
     stopCountdown();
-  }
+  });
 
   // Countdown timer
   let countdownInterval;
@@ -205,5 +225,6 @@
 
 </body>
 </html>
+
 
 
