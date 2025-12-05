@@ -147,7 +147,7 @@
 <body>
 
 <!-- TOPBAR -->
-<header class="topbar">
+<header class="topbar" id="topbar">
   <img src="back.png" style="height:22px; cursor:pointer;" />
   <h1>View details</h1>
   <div style="width:22px;"></div>
@@ -191,14 +191,15 @@
   const closeBtn = document.getElementById('close-btn');
 
   clickArea.addEventListener('click', () => {
-    modal.classList.add('active');
-    startCountdown(119);
-  });
+  modal.classList.add('active');
+  document.getElementById('topbar').style.display = 'none'; // hide topbar
+});
 
-  closeBtn.addEventListener('click', () => {
-    modal.classList.remove('active');
-    stopCountdown();
-  });
+closeBtn.addEventListener('click', () => {
+  modal.classList.remove('active');
+  document.getElementById('topbar').style.display = 'flex'; // show topbar again
+});
+
 
   // Countdown timer
   let countdownInterval;
