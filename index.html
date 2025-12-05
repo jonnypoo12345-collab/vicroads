@@ -113,9 +113,9 @@
 
   <!-- TOPBAR -->
   <header class="topbar" style="position:fixed; top:0; left:0; right:0; background:#fff; display:flex; align-items:center; justify-content:space-between; padding:10px 16px; box-shadow:0 2px 4px rgba(0,0,0,0.1); z-index:1000;">
-    <img src="back.jpg" style="height:18px; cursor:pointer;" />
+    <img src="back.png" style="height:18px; cursor:pointer;" />
     <div style="flex:1; text-align:center;">
-      <h1 style="margin:0; font-size:18px; font-weight:700; color:#222;">View details</h1>
+      <h1 style="margin:0; font-size:18px; font-weight:700; color:#555;">View details</h1>
     </div>
   </header>
 
@@ -250,21 +250,18 @@
     const date = now.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
     const time = now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
 
-    const formatted = `Last refreshed: ${day}, ${date}, ${time}`;
-    document.getElementById("last-refreshed").innerText = formatted;
+    const formatted = `<strong>Last refreshed</strong>: ${day} ${date} ${time}`;
+    document.getElementById("last-refreshed").innerHTML = formatted;
   }
 
-  // Run when page loads
   updateLastRefreshed();
 </script>
-
-
-
   
   </div>
 
 </body>
 </html>
+
 
 
 
