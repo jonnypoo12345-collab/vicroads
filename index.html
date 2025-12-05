@@ -39,6 +39,30 @@
     flex: 1;
   }
 
+  /* Last refreshed */
+  .last-refreshed {
+    margin: 20px 0 10px;
+    text-align: center;
+    font-size: 11px;
+    color: #555;
+  }
+
+  /* Yellow header */
+  .yellow-box {
+    width: 100%;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffd33e;
+  }
+
+  .yellow-box img {
+    height: 50px;
+    object-fit: contain;
+  }
+
+  /* Photo box */
   .photo-box {
     position: relative;
     margin-top: 70px;
@@ -51,14 +75,52 @@
     object-fit: cover;
   }
 
-  /* Clickable area over image */
   #click-area {
     position: absolute;
-    top: 60%;    /* adjust vertical position */
-    left: 70%;   /* adjust horizontal position */
-    width: 15%;  /* width of clickable area */
-    height: 15%; /* height of clickable area */
+    top: 60%;
+    left: 70%;
+    width: 15%;
+    height: 15%;
     cursor: pointer;
+  }
+
+  /* Permit details */
+  .value-bold {
+    font-weight: 700 !important;
+    color: #3a465c !important;
+    font-size: 16px !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 12px;
+  }
+
+  .detail-label {
+    font-size: 13px;
+    color: #6d717a;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-align: left;
+  }
+
+  hr.full { border: none; border-top: 1px solid #e5e5e5; margin: 12px 0; width: 100%; }
+  hr.full-large { border: none; border-top: 1px solid #e5e5e5; margin: 24px 0; width: 100%; }
+
+  .permit-details {
+    display: flex;
+    justify-content: flex-start;
+    gap: 100px;
+    margin-top: 24px;
+  }
+
+  .permit-column { display: flex; flex-direction: column; align-items: flex-start; }
+
+  .permit-box {
+    background: #f3f4f6;
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 24px;
+    font-weight: 700;
+    color: #222;
+    font-size: 16px;
   }
 
   /* Slide-up modal */
@@ -79,7 +141,6 @@
     bottom: 0;
   }
 
-  /* Modal header */
   .modal-header {
     display: flex;
     justify-content: space-between;
@@ -102,7 +163,6 @@
     cursor: pointer;
   }
 
-  /* QR image */
   .modal-qr {
     display: block;
     margin: 0 auto 15px auto;
@@ -111,7 +171,6 @@
     object-fit: contain;
   }
 
-  /* Countdown */
   .countdown {
     text-align: center;
     font-weight: 700;
@@ -119,7 +178,6 @@
     margin-bottom: 15px;
   }
 
-  /* Consent text */
   .consent-text {
     text-align: center;
     font-size: 14px;
@@ -131,7 +189,6 @@
     font-weight: 700;
   }
 
-  /* Sharing list */
   .sharing-list {
     font-size: 14px;
     line-height: 1.5;
@@ -152,6 +209,18 @@
   <h1>View details</h1>
   <div style="width:22px;"></div>
 </header>
+
+<!-- Last refreshed -->
+<div id="last-refreshed" class="last-refreshed">Loading...</div>
+
+<!-- Yellow header -->
+<section class="yellow-box">
+  <div style="line-height:1.2;">
+    <p style="margin:0; font-size:14px; font-weight:700;">LEARNER PERMIT</p>
+    <p style="margin:2px 0 0; font-size:14px; font-weight:500;">Victoria Australia</p>
+  </div>
+  <img src="Vicroad.jpg" alt="Vicroad Logo">
+</section>
 
 <!-- License Photo -->
 <section class="photo-box">
@@ -184,22 +253,134 @@
   </ul>
 </div>
 
+<div style="padding-left:20px; padding-right:20px;">
+  <!-- Permit buttons -->
+  <section class="action-buttons">
+    <button class="tab active" onclick="window.location.href='index.html'">Permit</button>
+    <button class="tab" onclick="window.location.href='identity.html'">Identity</button>
+    <button class="tab" onclick="window.location.href='age.html'">Age</button>
+  </section>
+
+  <!-- Name -->
+  <div class="value-bold" style="margin-top:40px; font-weight:700; font-size:20px; letter-spacing:1px;">
+    JONATHAN F SAWYER
+  </div>
+
+  <hr class="full" />
+
+  <!-- Permit details -->
+  <div class="permit-details">
+    <div class="permit-column">
+      <div class="detail-label">Permit number</div>
+      <div class="value-bold">059463617</div>
+
+      <div class="detail-label">Permit type</div>
+      <div class="value-bold" style="display:flex; align-items:center; gap:6px;">
+        Car <img src="Lplate.jpeg" style="height:18px;">
+      </div>
+    </div>
+
+    <div class="permit-column">
+      <div class="detail-label">Expiry</div>
+      <div class="value-bold">12 Aug 2035</div>
+
+      <div class="detail-label">Date of birth</div>
+      <div class="value-bold">07 Aug 2007</div>
+    </div>
+  </div>
+
+  <hr class="full-large" />
+
+  <!-- Address -->
+  <div style="font-weight:700; font-size:16px;">
+    <div class="detail-label" style="margin-bottom:4px;">Address</div>
+    <div class="value-bold" style="margin-bottom:2px;">109 LOWER DANDENONG RD</div>
+    <div class="value-bold" style="margin-bottom:0;">MENTONE VIC 3194</div>
+  </div>
+
+  <hr class="full-large" />
+
+  <!-- Signature -->
+  <div>
+    <div class="detail-label">Signature</div>
+    <img src="Sign.jpeg" style="height:60px; object-fit:contain;">
+  </div>
+
+  <div class="permit-box">CAR LEARNER PERMIT DETAILS</div>
+
+  <!-- Status -->
+  <div style="margin-top:24px;">
+    <div class="detail-label">Permit status</div>
+    <div style="display:flex; align-items:center; gap:6px;">
+      <img src="Tick.jpeg" style="height:18px;">
+      <div class="value-bold">Current</div>
+    </div>
+  </div>
+
+  <!-- Proficiency -->
+  <div style="margin-top:24px;">
+    <div class="detail-label">Proficiency</div>
+    <div style="display:flex; align-items:center; gap:6px;">
+      <img src="Lplate.jpeg" style="height:18px;">
+      <div class="value-bold">LEARNERS</div>
+    </div>
+  </div>
+
+  <!-- Issue date -->
+  <div style="margin-top:24px;">
+    <div class="detail-label">Issue date</div>
+    <div class="value-bold">12 Aug 2025</div>
+  </div>
+
+  <div class="permit-box">Other details</div>
+
+  <div style="margin-top:24px;">
+    <div class="detail-label">Conditions</div>
+    <div class="value-bold">No Conditions</div>
+  </div>
+
+  <div style="margin-top:24px;">
+    <div class="detail-label">Card number</div>
+    <div class="value-bold">********</div>
+  </div>
+
+  <hr class="full-large" />
+
+  <div style="margin-top:24px;">
+    <div class="detail-label">Victoria Police barcode</div>
+    <img src="Barcode.png" style="width:100%; border-radius:14px;">
+  </div>
+</div>
+
 <script>
+  // Last refreshed
+  function updateLastRefreshed() {
+    const now = new Date();
+    const day = now.toLocaleDateString('en-AU', { weekday: 'short' });
+    const date = now.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
+    const time = now.toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit', hour12: true });
+    const formatted = `Last refreshed: ${day} ${date} ${time}`;
+    document.getElementById("last-refreshed").innerText = formatted;
+  }
+  updateLastRefreshed();
+
   // Modal toggle
   const clickArea = document.getElementById('click-area');
   const modal = document.getElementById('modal');
   const closeBtn = document.getElementById('close-btn');
+  const topbar = document.getElementById('topbar');
 
   clickArea.addEventListener('click', () => {
-  modal.classList.add('active');
-  document.getElementById('topbar').style.display = 'none'; // hide topbar
-});
+    modal.classList.add('active');
+    topbar.style.display = 'none';
+    startCountdown(119);
+  });
 
-closeBtn.addEventListener('click', () => {
-  modal.classList.remove('active');
-  document.getElementById('topbar').style.display = 'flex'; // show topbar again
-});
-
+  closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+    topbar.style.display = 'flex';
+    stopCountdown();
+  });
 
   // Countdown timer
   let countdownInterval;
@@ -226,6 +407,5 @@ closeBtn.addEventListener('click', () => {
 
 </body>
 </html>
-
 
 
