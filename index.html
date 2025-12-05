@@ -1,4 +1,4 @@
-<!doctype html>
+!doctype html>
 <html lang="en">
 <head>
   <meta name="format-detection" content="telephone=no">
@@ -85,11 +85,27 @@
       margin-bottom: 12px;
     }
 
+    .photo-box {
+      position: relative; /* needed for clickable area */
+    }
+
     .photo-box img {
       width: 100%;
       height: auto;
       display: block;
       object-fit: cover;
+    }
+
+    /* Clickable area over image */
+    #click-area {
+      position: absolute;
+      top: 60%;    /* adjust vertical position */
+      left: 70%;   /* adjust horizontal position */
+      width: 15%;  /* width of clickable area */
+      height: 15%; /* height of clickable area */
+      cursor: pointer;
+      /* optional: remove background or keep semi-transparent for testing */
+      /* background: rgba(255,0,0,0.3); */
     }
 
     .yellow-box {
@@ -145,6 +161,37 @@
       flex-direction: column;
       align-items: flex-start;
     }
+
+    /* Slide-up modal */
+    .slide-up-modal {
+      position: fixed;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      height: 70%;
+      background: #fff;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.2);
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      transition: bottom 0.5s ease-in-out;
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 999;
+    }
+
+    .slide-up-modal.active {
+      bottom: 0;
+    }
+
+    .slide-up-modal .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
   </style>
 </head>
 
@@ -172,8 +219,17 @@
 
   <!-- PHOTO -->
   <section class="photo-box">
-    <img src="License.jpeg">
+    <img src="License.jpeg" alt="License Image">
+    <div id="click-area"></div>
   </section>
+
+  <!-- Slide-up modal -->
+  <div class="slide-up-modal" id="modal">
+    <div class="close-btn" id="close-btn">&times;</div>
+    <h2>QR Code / Extra Info</h2>
+    <p>Add any content here — QR codes, text, buttons, etc.</p>
+    <img src="QRCode.png" style="width:150px; display:block; margin:20px auto;">
+  </div>
 
   <div style="padding-left:20px; padding-right:20px;">
 
@@ -220,10 +276,10 @@
 
     <!-- ADDRESS -->
     <div style="font-weight:700; font-size:16px;">
-  <div class="detail-label" style="margin-bottom:4px;">Address</div>
-  <div class="value-bold" style="margin-bottom:2px;">109 LOWER DANDENONG RD</div>
-  <div class="value-bold" style="margin-bottom:0;">MENTONE VIC 3194</div>
-</div>
+      <div class="detail-label" style="margin-bottom:4px;">Address</div>
+      <div class="value-bold" style="margin-bottom:2px;">109 LOWER DANDENONG RD</div>
+      <div class="value-bold" style="margin-bottom:0;">MENTONE VIC 3194</div>
+    </div>
 
     <hr class="full-large" />
 
@@ -281,18 +337,33 @@
   </div>
 
   <script>
+    // Last refreshed
     function updateLastRefreshed() {
       const now = new Date();
-
       const day = now.toLocaleDateString('en-AU', { weekday: 'short' });
       const date = now.toLocaleDateString('en-AU', { day: '2-digit', month: 'short', year: 'numeric' });
       const time = now.toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit', hour12: true });
-
       const formatted = `<strong>Last refreshed</strong>: ${day} ${date} ${time}`;
       document.getElementById("last-refreshed").innerHTML = formatted;
     }
-
     updateLastRefreshed();
+
+    // Modal slide-up
+    const clickArea = document.getElementById('click-area');
+    const modal = document.getElementById('modal');
+    const closeBtn = document.getElementById('close-btn');
+
+    clickArea.addEventListener('click', () => {
+      modal.classList.add('active');
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    });
   </script>
 
 </body>
