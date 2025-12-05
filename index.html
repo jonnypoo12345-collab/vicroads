@@ -145,6 +145,82 @@
       flex-direction: column;
       align-items: flex-start;
     }
+
+    /* Slide-up modal */
+    .slide-up-modal {
+      position: fixed;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      transition: bottom 0.5s ease-in-out;
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 999;
+    }
+
+    .slide-up-modal.active {
+      bottom: 0;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      flex: 1;
+      text-align: center;
+    }
+
+    .close-btn {
+      font-size: 24px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .modal-qr {
+      display: block;
+      margin: 0 auto 15px auto;
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+    }
+
+    .countdown {
+      text-align: center;
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .consent-text {
+      text-align: center;
+      font-size: 14px;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .consent-text b {
+      font-weight: 700;
+    }
+
+    .sharing-list {
+      font-size: 14px;
+      line-height: 1.5;
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    .sharing-list li {
+      margin-bottom: 6px;
+    }
   </style>
 </head>
 
@@ -173,6 +249,8 @@
   <!-- PHOTO -->
   <section class="photo-box">
     <img src="License.jpeg">
+    <!-- QR clickable area -->
+    <div id="click-area"></div>
   </section>
 
   <div style="padding-left:20px; padding-right:20px;">
@@ -220,10 +298,10 @@
 
     <!-- ADDRESS -->
     <div style="font-weight:700; font-size:16px;">
-  <div class="detail-label" style="margin-bottom:4px;">Address</div>
-  <div class="value-bold" style="margin-bottom:2px;">109 LOWER DANDENONG RD</div>
-  <div class="value-bold" style="margin-bottom:0;">MENTONE VIC 3194</div>
-</div>
+      <div class="detail-label" style="margin-bottom:4px;">Address</div>
+      <div class="value-bold" style="margin-bottom:2px;">109 LOWER DANDENONG RD</div>
+      <div class="value-bold" style="margin-bottom:0;">MENTONE VIC 3194</div>
+    </div>
 
     <hr class="full-large" />
 
@@ -280,6 +358,31 @@
 
   </div>
 
+  <!-- Slide-up modal section -->
+  <div class="slide-up-modal" id="modal">
+    <div class="modal-header">
+      <div></div>
+      <h2>Verify Permit</h2>
+      <div class="close-btn" id="close-btn">&times;</div>
+    </div>
+
+    <img src="QRCode.png" alt="QR Code" class="modal-qr">
+    <div class="countdown" id="countdown">QR expires in 01:59</div>
+
+    <div class="consent-text">
+      By presenting this QR code you <b>consent</b> to share some or all of your driver licence information, including with scanners, venues and law enforcement agencies. This may retain your information in accordance with their business practise and legal requirements.
+    </div>
+
+    <div class="consent-text"><b>You're sharing:</b></div>
+    <ul class="sharing-list">
+      <li>Victorian driver licence photo</li>
+      <li>Full name, birth date and address</li>
+      <li>Licence number, type and expiry date</li>
+      <li>Licence status</li>
+      <li>Proficiency</li>
+    </ul>
+  </div>
+
   <script>
     function updateLastRefreshed() {
       const now = new Date();
@@ -293,6 +396,43 @@
     }
 
     updateLastRefreshed();
+
+    // Modal toggle
+    const clickArea = document.getElementById('click-area');
+    const modal = document.getElementById('modal');
+    const closeBtn = document.getElementById('close-btn');
+
+    clickArea.addEventListener('click', () => {
+      modal.classList.add('active');
+      startCountdown(119);
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.classList.remove('active');
+      stopCountdown();
+    });
+
+    // Countdown timer
+    let countdownInterval;
+    function startCountdown(seconds) {
+      const countdownEl = document.getElementById('countdown');
+      let remaining = seconds;
+
+      countdownInterval = setInterval(() => {
+        const mins = Math.floor(remaining / 60);
+        const secs = remaining % 60;
+        countdownEl.textContent = `QR expires in ${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+        remaining--;
+        if (remaining < 0) {
+          clearInterval(countdownInterval);
+          countdownEl.textContent = 'QR expired';
+        }
+      }, 1000);
+    }
+
+    function stopCountdown() {
+      clearInterval(countdownInterval);
+    }
   </script>
 
 </body>
